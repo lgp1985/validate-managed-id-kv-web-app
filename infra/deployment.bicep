@@ -106,12 +106,12 @@ resource webApp 'Microsoft.Web/sites@2024-11-01' = {
 }
 
 resource roleKeyVaultUserAssignedIdentity 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(keyVault.id, UserAssignedIdentity.id, 'b86a8fe4-44ce-4948-aee5-eccb2c155cd7') // Key Vault Secrets User
+  name: guid(keyVault.id, UserAssignedIdentity.id, '4633458b-17de-408a-b874-0445c86b69e6') // Key Vault Secrets User
   scope: keyVault
   properties: {
     roleDefinitionId: subscriptionResourceId(
       'Microsoft.Authorization/roleDefinitions',
-      'b86a8fe4-44ce-4948-aee5-eccb2c155cd7'
+      '4633458b-17de-408a-b874-0445c86b69e6'
     ) // Key Vault Secrets User
     principalId: UserAssignedIdentity.properties.principalId
     principalType: 'ServicePrincipal'
