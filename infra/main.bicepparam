@@ -1,6 +1,6 @@
 using './main.bicep'
 
-param location = 'eastus2'
+param location = 'Central US'
 param resourceGroupName = 'rg-lg-temp1'
 param appServicePlanName = 'app-temp1'
 param webAppName = 'web-temp1'
