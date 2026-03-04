@@ -34,19 +34,13 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-02-01' = {
     tenantId: subscription().tenantId
   }
 }
-
-resource keyVaultSecret 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
-  name: keyVaultName
-  resource secret 'secrets@2023-07-01' = {
+  resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
     name: secretName
+    parent: keyVault
     properties: {
       value: KnwonValue
     }
   }
-  dependsOn: [
-    keyVault
-  ]
-}
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2024-11-01' = {
   name: appServicePlanName
