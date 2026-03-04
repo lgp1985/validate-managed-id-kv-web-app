@@ -35,7 +35,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource KeyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
+resource keyVaultSecret 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
   name: keyVaultName
   resource secret 'secrets@2023-07-01' = {
     name: secretName
@@ -43,6 +43,9 @@ resource KeyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
       value: KnwonValue
     }
   }
+  dependsOn: [
+    keyVault
+  ]
 }
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2024-11-01' = {
