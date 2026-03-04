@@ -13,7 +13,6 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   tags: {}
   properties: {
     createMode: 'default'
-    enablePurgeProtection: false
     enableRbacAuthorization: true
     enableSoftDelete: false
     // networkAcls: {
