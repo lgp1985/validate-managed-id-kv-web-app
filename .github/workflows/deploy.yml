@@ -1,0 +1,30 @@
+on:
+  workflow_dispatch:
+  
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  deployment-step:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+
+        - uses: azure/login@v2
+          with:
+            client-id: ${{ secret.AZURE_CLIENT_ID }}
+            subscription-id: ${{ secret.AZURE_SUBSCRIPTION_ID }}
+            tenant-id: ${{ secret.AZURE_TENANT_ID }}
+            
+        - uses: azure/bicep-deploy@v2
+          id: bicep-resources-deploy
+          with:
+            type: deployment
+            operation: create
+            scope: subscription
+            name: main-deploy-yaml
+            location: eastus2
+            subscription-id: ${{ secret.AZURE_SUBSCRIPTION_ID }}
+            template-file: infra/main.bicep
+            parameters-file: infra/main.bicepparam
