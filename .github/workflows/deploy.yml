@@ -23,7 +23,7 @@ jobs:
             type: deployment
             operation: create
             scope: subscription
-            name: main-deploy-yaml
+            name: main-deploy-yaml-${{ github.run_id }}
             location: eastus2
             subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
             template-file: infra/main.bicep
