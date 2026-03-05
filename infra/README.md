@@ -101,6 +101,6 @@ In your app code, read `MY_SECRET` like a normal environment variable.
 - In this sample, parameter name `KnwonValue` is intentionally kept as-is to match the current Bicep files.
 - Propagation for RBAC and identity changes can take a few minutes.
 - If resolution fails, verify:
- 	- Web App identity includes the expected user-assigned identity
- 	- `keyVaultReferenceIdentity` points to that same identity
- 	- Role assignment is on the correct Key Vault scope
+  - Web App identity includes the expected user-assigned identity
+  - `keyVaultReferenceIdentity` points to that same identity
+  - Role assignment is on the correct Key Vault scope
