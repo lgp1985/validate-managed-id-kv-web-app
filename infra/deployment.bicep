@@ -36,7 +36,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2025-05-01' = {
         }
       ]
     }
-    publicNetworkAccess: 'Disabled'
+    publicNetworkAccess: 'Enabled'
     provisioningState: 'RegisteringDns'
 
     sku: {
