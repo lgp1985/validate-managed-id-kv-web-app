@@ -31,6 +31,9 @@ resource virtualNetwork_AzureFirewallSubnet 'Microsoft.Network/virtualNetworks/s
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
   }
+  dependsOn:[
+    virtualNetwork_default
+  ]
 }
 
 resource virtualNetwork_default 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = {
@@ -126,4 +129,7 @@ resource virtualNetwork_snetKvWeb 'Microsoft.Network/virtualNetworks/subnets@202
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
   }
+  dependsOn: [
+    virtualNetwork_AzureFirewallSubnet
+  ]
 }
