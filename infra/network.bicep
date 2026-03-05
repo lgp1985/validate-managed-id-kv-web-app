@@ -94,7 +94,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-05-01' = {
   }
 }
 
-resource virtualNetwork_snetKvWebTemp1 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = {
+resource virtualNetwork_snetKvWeb 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = {
   parent: virtualNetwork
   name: network.subnetName
   properties: {

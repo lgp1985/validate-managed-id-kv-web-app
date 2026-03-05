@@ -13,7 +13,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-05-01' existing 
   name: network.virtualNetworkName
 }
 
-resource virtualNetwork_snetKvWebTemp1 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' existing = {
+resource virtualNetwork_snetKvWeb 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' existing = {
   parent: virtualNetwork
   name: network.subnetName
 }
@@ -31,7 +31,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2025-05-01' = {
       defaultAction: 'Deny'
       virtualNetworkRules: [
         {
-          id: virtualNetwork_snetKvWebTemp1.id
+          id: virtualNetwork_snetKvWeb.id
           ignoreMissingVnetServiceEndpoint: false
         }
       ]
@@ -105,7 +105,7 @@ resource webApp 'Microsoft.Web/sites@2025-03-01' = {
       http20Enabled: true
       healthCheckPath: '/'
     }
-    virtualNetworkSubnetId: virtualNetwork_snetKvWebTemp1.id
+    virtualNetworkSubnetId: virtualNetwork_snetKvWeb.id
     httpsOnly: true
   }
 }
