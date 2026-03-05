@@ -1,14 +1,9 @@
 param location string
-param keyVaultName string
-param appServicePlanName string
-param webAppName string
-param userAssignedIdentityName string
-
-param secretName string
-param KnwonValue string
+import * as types from './types.bicep'
+param resources types.resourceParams
 
 resource keyVault 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  name: keyVaultName
+  name: resources.keyVaultName
   location: location
   tags: {}
   properties: {
@@ -34,16 +29,16 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-02-01' = {
     tenantId: subscription().tenantId
   }
 }
-  resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
-    name: secretName
-    parent: keyVault
-    properties: {
-      value: KnwonValue
-    }
+resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+  name: resources.secretName
+  parent: keyVault
+  properties: {
+    value: resources.KnwonValue
   }
+}
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2024-11-01' = {
-  name: appServicePlanName
+  name: resources.appServicePlanName
   location: location
   kind: 'app,linux'
   properties: {
@@ -56,7 +51,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2024-11-01' = {
 }
 
 resource UserAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: userAssignedIdentityName
+  name: resources.userAssignedIdentityName
   location: location
   tags: {}
 }
@@ -72,7 +67,7 @@ resource UserAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@
 // }
 
 resource webApp 'Microsoft.Web/sites@2024-11-01' = {
-  name: webAppName
+  name: resources.webAppName
   location: location
   identity: {
     type: 'UserAssigned'

@@ -1,15 +1,27 @@
 param location string
-param resourceGroupName string
-param appServicePlanName string
-param webAppName string
-param userAssignedIdentityName string
-param keyVaultName string
-param secretName string
-param KnwonValue string
+import * as types from './types.bicep'
+param network types.networkParams
+param resources types.resourceParams
 
 targetScope = 'subscription'
+
+resource networkResourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' = {
+  name: network.resourceGroupName
+  location: location
+  tags: {}
+}
+
+module networkDeployment 'network.bicep' = {
+  name: 'deployNetworkResources'
+  scope: networkResourceGroup
+  params: {
+    location: location
+    network: network
+  }
+}
+
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' = {
-  name: resourceGroupName
+  name: resources.resourceGroupName
   location: location
   tags: {}
 }
@@ -19,11 +31,6 @@ module deployment 'deployment.bicep' = {
   scope: resourceGroup
   params: {
     location: location
-    appServicePlanName: appServicePlanName
-    webAppName: webAppName
-    userAssignedIdentityName: userAssignedIdentityName
-    keyVaultName: keyVaultName
-    secretName: secretName
-    KnwonValue: KnwonValue
+    resources: resources
   }
 }
