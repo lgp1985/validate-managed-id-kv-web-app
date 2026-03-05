@@ -32,5 +32,9 @@ module deployment 'deployment.bicep' = {
   params: {
     location: location
     resources: resources
+    network: network
   }
+  dependsOn: [
+    networkDeployment
+  ]
 }

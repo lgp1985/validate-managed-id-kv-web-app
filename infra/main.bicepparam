@@ -7,6 +7,7 @@ param network = {
   routeTablesName: 'rt-vnet-temp1'
   virtualNetworkName: 'vnet-lg-temp1'
   networkSecurityGroupName: 'nsg-lg-temp1'
+  subnetName: 'snet-kv-web-temp1'
 }
 
 param resources = {

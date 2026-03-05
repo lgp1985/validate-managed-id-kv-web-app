@@ -9,6 +9,7 @@ type networkParams = {
   routeTablesName: string
   virtualNetworkName: string
   networkSecurityGroupName: string
+  subnetName: string
 }
 
 @export()
@@ -18,7 +19,7 @@ type resourceParams = {
   webAppName: string
   userAssignedIdentityName: string
   keyVaultName: string
-  
+
   secretName: string
   KnwonValue: string
 }

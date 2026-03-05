@@ -1,6 +1,22 @@
 param location string
 import * as types from './types.bicep'
 param resources types.resourceParams
+param network types.networkParams
+
+resource networkResourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' existing = {
+  name: network.resourceGroupName
+  scope: subscription()
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-05-01' existing = {
+  scope: networkResourceGroup
+  name: network.virtualNetworkName
+}
+
+resource virtualNetwork_snetKvWebTemp1 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' existing = {
+  parent: virtualNetwork
+  name: network.subnetName
+}
 
 resource keyVault 'Microsoft.KeyVault/vaults@2025-05-01' = {
   name: resources.keyVaultName
@@ -10,17 +26,18 @@ resource keyVault 'Microsoft.KeyVault/vaults@2025-05-01' = {
     createMode: 'default'
     enableRbacAuthorization: true
     enableSoftDelete: false
-    // networkAcls: {
-    //   bypass: kvByPass
-    //   defaultAction: kvDefaultAction
-    //   ipRules: kvIpRules
-    //   virtualNetworkRules: [ for (kvVirtualNewtworkSubnetId,i) in SubnetResourceIdsForServiceEndpoints :  (!empty(SubnetResourceIdsForServiceEndpoints)) ? {
-    //     id: kvVirtualNewtworkSubnetId
-    //     ignoreMissingVnetServiceEndpoint: kvIgnoreMissingVnetServiceEndpoint
-    //   } : {} ]
-    // }
+    networkAcls: {
+      bypass: 'None'
+      defaultAction: 'Deny'
+      virtualNetworkRules: [
+        {
+          id: virtualNetwork_snetKvWebTemp1.id
+          ignoreMissingVnetServiceEndpoint: false
+        }
+      ]
+    }
+    publicNetworkAccess: 'Disabled'
     provisioningState: 'RegisteringDns'
-    // publicNetworkAccess: (empty(SubnetResourceIdsForServiceEndpoints)) ? 'Disabled' : 'Enabled'
 
     sku: {
       name: 'standard'
@@ -29,6 +46,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2025-05-01' = {
     tenantId: subscription().tenantId
   }
 }
+
 resource secret 'Microsoft.KeyVault/vaults/secrets@2025-05-01' = {
   name: resources.secretName
   parent: keyVault
@@ -85,17 +103,9 @@ resource webApp 'Microsoft.Web/sites@2025-03-01' = {
       use32BitWorkerProcess: false
       ftpsState: 'FtpsOnly'
       http20Enabled: true
-      // ipSecurityRestrictions: [
-      //   for vnetSubnetResourceId in vnetSubnetResourceIds: {
-      //     vnetSubnetResourceId: vnetSubnetResourceId
-      //     action: 'Allow'
-      //     tag: 'Default'
-      //     priority: 1000
-      //   }
-      // ]
       healthCheckPath: '/'
     }
-    // virtualNetworkSubnetId: virtualNetworkSubnetIdVinrouterApp2Kv
+    virtualNetworkSubnetId: virtualNetwork_snetKvWebTemp1.id
     httpsOnly: true
   }
 }

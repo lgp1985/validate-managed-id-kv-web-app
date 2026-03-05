@@ -96,7 +96,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-05-01' = {
 
 resource virtualNetwork_snetKvWebTemp1 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = {
   parent: virtualNetwork
-  name: 'snet-kv-web-temp1'
+  name: network.subnetName
   properties: {
     addressPrefixes: [
       '10.0.1.64/27'
