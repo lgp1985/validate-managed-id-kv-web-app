@@ -2,7 +2,7 @@ param location string
 import * as types from './types.bicep'
 param resources types.resourceParams
 
-resource keyVault 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource keyVault 'Microsoft.KeyVault/vaults@2025-05-01' = {
   name: resources.keyVaultName
   location: location
   tags: {}
@@ -29,7 +29,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-02-01' = {
     tenantId: subscription().tenantId
   }
 }
-resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+resource secret 'Microsoft.KeyVault/vaults/secrets@2025-05-01' = {
   name: resources.secretName
   parent: keyVault
   properties: {
@@ -37,7 +37,7 @@ resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   }
 }
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2024-11-01' = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2025-03-01' = {
   name: resources.appServicePlanName
   location: location
   kind: 'app,linux'
@@ -50,7 +50,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2024-11-01' = {
   }
 }
 
-resource UserAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+resource UserAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2024-11-30' = {
   name: resources.userAssignedIdentityName
   location: location
   tags: {}
@@ -66,7 +66,7 @@ resource UserAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@
 //   }
 // }
 
-resource webApp 'Microsoft.Web/sites@2024-11-01' = {
+resource webApp 'Microsoft.Web/sites@2025-03-01' = {
   name: resources.webAppName
   location: location
   identity: {

@@ -2,7 +2,7 @@ param location string
 import * as types from './types.bicep'
 param network types.networkParams
 
-resource networkSecurityGroups_nsg_lg_temp1_name_resource 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
+resource networkSecurityGroups_nsg_lg_temp1_name_resource 'Microsoft.Network/networkSecurityGroups@2025-05-01' = {
   name: network.networkSecurityGroupName
   location: location
   properties: {
@@ -10,7 +10,7 @@ resource networkSecurityGroups_nsg_lg_temp1_name_resource 'Microsoft.Network/net
   }
 }
 
-resource routeTables_rt_vnet_temp1_name_resource 'Microsoft.Network/routeTables@2024-07-01' = {
+resource routeTables_rt_vnet_temp1_name_resource 'Microsoft.Network/routeTables@2025-05-01' = {
   name: network.routeTablesName
   location: location
   properties: {
@@ -19,7 +19,7 @@ resource routeTables_rt_vnet_temp1_name_resource 'Microsoft.Network/routeTables@
   }
 }
 
-resource virtualNetworks_vnet_lg_temp1_name_AzureFirewallSubnet 'Microsoft.Network/virtualNetworks/subnets@2024-07-01' = {
+resource virtualNetworks_vnet_lg_temp1_name_AzureFirewallSubnet 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = {
   // this is out-of-box
   parent: virtualNetworks_vnet_lg_temp1_name_resource
   name: 'AzureFirewallSubnet'
@@ -33,7 +33,7 @@ resource virtualNetworks_vnet_lg_temp1_name_AzureFirewallSubnet 'Microsoft.Netwo
   }
 }
 
-resource virtualNetworks_vnet_lg_temp1_name_default 'Microsoft.Network/virtualNetworks/subnets@2024-07-01' = {
+resource virtualNetworks_vnet_lg_temp1_name_default 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = {
   // this is out-of-box
   parent: virtualNetworks_vnet_lg_temp1_name_resource
   name: 'default'
@@ -47,7 +47,7 @@ resource virtualNetworks_vnet_lg_temp1_name_default 'Microsoft.Network/virtualNe
   }
 }
 
-resource virtualNetworks_vnet_lg_temp1_name_resource 'Microsoft.Network/virtualNetworks@2024-07-01' = {
+resource virtualNetworks_vnet_lg_temp1_name_resource 'Microsoft.Network/virtualNetworks@2025-05-01' = {
   name: network.virtualNetworkName
   location: location
   properties: {
@@ -94,7 +94,7 @@ resource virtualNetworks_vnet_lg_temp1_name_resource 'Microsoft.Network/virtualN
   }
 }
 
-resource virtualNetworks_vnet_lg_temp1_name_snet_kv_web_temp1 'Microsoft.Network/virtualNetworks/subnets@2024-07-01' = {
+resource virtualNetworks_vnet_lg_temp1_name_snet_kv_web_temp1 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = {
   parent: virtualNetworks_vnet_lg_temp1_name_resource
   name: 'snet-kv-web-temp1'
   properties: {
