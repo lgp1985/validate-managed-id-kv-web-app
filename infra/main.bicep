@@ -11,12 +11,19 @@ resource networkResourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' = 
   tags: {}
 }
 
+
+module checkVnetConnected 'check-vnet-connected.bicep' = {
+  name: 'checkVnetConnected'
+  scope: networkResourceGroup
+}
+
 module networkDeployment 'network.bicep' = {
   name: 'deployNetworkResources'
   scope: networkResourceGroup
   params: {
     location: location
     network: network
+    vnetConnected: checkVnetConnected.outputs.exists
   }
 }
 
