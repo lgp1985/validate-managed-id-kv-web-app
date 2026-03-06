@@ -2,6 +2,8 @@ param location string
 import * as types from './types.bicep'
 param network types.networkParams
 
+param vnetConnected bool
+
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2025-05-01' = {
   name: network.networkSecurityGroupName
   location: location
@@ -97,7 +99,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-05-01' = {
   }
 }
 
-resource virtualNetwork_snetKvWeb 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = {
+resource virtualNetwork_snetKvWeb 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' =if (!vnetConnected) {
   parent: virtualNetwork
   name: network.subnetName
   properties: {
