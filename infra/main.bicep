@@ -14,7 +14,7 @@ resource networkResourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' = 
 
 module checkVnetConnected 'check-vnet-connected.bicep' = {
   name: 'checkVnetConnected'
-  scope: networkResourceGroup
+  scope: resourceGroup
   params: {
     userAssignedIdentityName: resources.userAssignedIdentityName
   }
