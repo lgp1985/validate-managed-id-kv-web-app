@@ -39,7 +39,7 @@ jobs:
           parameters-file: infra/main.bicepparam
           parameters: >
             {
-              "vnetConnected":  "${{ steps.check-vnet-integration.outputs.exists }}"
+              "vnetConnected":  ${{ steps.check-vnet-integration.outputs.exists }}
             }
 
       - uses: azure/cli@v2
