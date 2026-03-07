@@ -3,7 +3,6 @@ import * as types from './types.bicep'
 param network types.networkParams
 param resources types.resourceParams
 param githubRun_id string = '0'
-param vnetConnected bool = false
 
 targetScope = 'subscription'
 
@@ -19,7 +18,6 @@ module networkDeployment 'network.bicep' = {
   params: {
     location: location
     network: network
-    vnetConnected: vnetConnected
   }
 }
 
