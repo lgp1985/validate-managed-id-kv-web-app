@@ -137,10 +137,4 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-05-01' = {
 //   ]
 // }
 
-resource virtualNetwork_snetKvWeb_existing 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' existing = if (vnetConnected) {
-  parent: virtualNetwork
-  name: network.subnetName
-}
-
 // output virtualNetwork_snetKvWeb_Id string = vnetConnected ? virtualNetwork_snetKvWeb_existing.id : virtualNetwork_snetKvWeb.id
-output virtualNetwork_snetKvWeb_Id string = virtualNetwork_snetKvWeb_existing.id
