@@ -123,12 +123,31 @@ resource roleKeyVaultUserAssignedIdentity 'Microsoft.Authorization/roleAssignmen
   }
 }
 
+resource logWorkspace 'Microsoft.OperationalInsights/workspaces@2025-07-01' = {
+  name: resources.logAnalyticsWorkspaceName
+  location: location
+  properties: {
+    retentionInDays: 30
+  }
+}
+
+resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
+  name: resources.applicationInsightsName
+  location: location
+  kind: 'web'
+  properties:{
+    Application_Type: 'web'
+    WorkspaceResourceId: logWorkspace.id
+  }
+}
+
 resource webAppAppSettings 'Microsoft.Web/sites/config@2025-03-01' = {
   name: 'appsettings'
   kind: 'string'
   parent: webApp
   properties: {
     secret__temp1: '@Microsoft.KeyVault(SecretUri=${secret.properties.secretUri})'
+    APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
   }
   dependsOn: [
     roleKeyVaultUserAssignedIdentity

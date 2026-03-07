@@ -14,6 +14,8 @@ param resources = {
   resourceGroupName: 'rg-lg-temp1'
   appServicePlanName: 'app-temp1'
   webAppName: 'web-temp1'
+  logAnalyticsWorkspaceName: 'law-temp1'
+  applicationInsightsName: 'ai-temp1'
   userAssignedIdentityName: 'uai-temp1'
   keyVaultName: 'kv-lgp-temp1'
   secretName: 'secret-temp1'

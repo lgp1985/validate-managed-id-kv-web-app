@@ -17,6 +17,8 @@ type resourceParams = {
   resourceGroupName: rgName
   appServicePlanName:string
   webAppName: string
+  logAnalyticsWorkspaceName: string
+  applicationInsightsName: string
   userAssignedIdentityName: string
   keyVaultName: string
 
