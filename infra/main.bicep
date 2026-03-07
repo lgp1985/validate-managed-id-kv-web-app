@@ -2,8 +2,8 @@ param location string
 import * as types from './types.bicep'
 param network types.networkParams
 param resources types.resourceParams
-param githubRun_id string
-param vnetConnected bool
+param githubRun_id string = '0'
+param vnetConnected bool = false
 
 targetScope = 'subscription'
 
