@@ -108,6 +108,9 @@ resource webApp 'Microsoft.Web/sites@2025-03-01' = {
     virtualNetworkSubnetId: virtualNetwork_snetKvWeb.id
     httpsOnly: true
   }
+  dependsOn: [
+    roleKeyVaultUserAssignedIdentity
+  ]
 }
 
 resource roleKeyVaultUserAssignedIdentity 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
