@@ -142,4 +142,5 @@ resource virtualNetwork_snetKvWeb_existing 'Microsoft.Network/virtualNetworks/su
   name: network.subnetName
 }
 
-output virtualNetwork_snetKvWeb_Id string = vnetConnected ? virtualNetwork_snetKvWeb_existing.id : virtualNetwork_snetKvWeb.id
+// output virtualNetwork_snetKvWeb_Id string = vnetConnected ? virtualNetwork_snetKvWeb_existing.id : virtualNetwork_snetKvWeb.id
+output virtualNetwork_snetKvWeb_Id string = virtualNetwork_snetKvWeb_existing.id
