@@ -99,43 +99,43 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-05-01' = {
   }
 }
 
-resource virtualNetwork_snetKvWeb 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = if (!vnetConnected) {
-  // This should be idempotent, but if the subnet is already connected it'll fail with "code": "InUseSubnetCannotBeDeleted", "message": "Subnet snet-kv-web-temp1 is in use by /subscriptions/***/resourceGroups/rg-lg-vnet-temp1/providers/Microsoft.Network/virtualNetworks/vnet-lg-temp1/subnets/snet-kv-web-temp1/serviceAssociationLinks/AppServiceLink and cannot be deleted. In order to delete the subnet, delete all the resources within the subnet. See aka.ms/deletesubnet.",
-  parent: virtualNetwork
-  name: network.subnetName
-  properties: {
-    addressPrefixes: [
-      '10.0.1.64/27'
-    ]
-    networkSecurityGroup: {
-      id: networkSecurityGroup.id
-    }
-    routeTable: {
-      id: routeTable.id
-    }
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.KeyVault'
-        locations: [
-          '*'
-        ]
-      }
-    ]
-    delegations: [
-      {
-        name: 'Microsoft.Web/serverFarms'
-        properties: {
-          serviceName: 'Microsoft.Web/serverFarms'
-        }
-      }
-    ]
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-  }
-  dependsOn: [
-    virtualNetwork_AzureFirewallSubnet
-  ]
-}
+// resource virtualNetwork_snetKvWeb 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = if (!vnetConnected) {
+//   // This should be idempotent, but if the subnet is already connected it'll fail with "code": "InUseSubnetCannotBeDeleted", "message": "Subnet snet-kv-web-temp1 is in use by /subscriptions/***/resourceGroups/rg-lg-vnet-temp1/providers/Microsoft.Network/virtualNetworks/vnet-lg-temp1/subnets/snet-kv-web-temp1/serviceAssociationLinks/AppServiceLink and cannot be deleted. In order to delete the subnet, delete all the resources within the subnet. See aka.ms/deletesubnet.",
+//   parent: virtualNetwork
+//   name: network.subnetName
+//   properties: {
+//     addressPrefixes: [
+//       '10.0.1.64/27'
+//     ]
+//     networkSecurityGroup: {
+//       id: networkSecurityGroup.id
+//     }
+//     routeTable: {
+//       id: routeTable.id
+//     }
+//     serviceEndpoints: [
+//       {
+//         service: 'Microsoft.KeyVault'
+//         locations: [
+//           '*'
+//         ]
+//       }
+//     ]
+//     delegations: [
+//       {
+//         name: 'Microsoft.Web/serverFarms'
+//         properties: {
+//           serviceName: 'Microsoft.Web/serverFarms'
+//         }
+//       }
+//     ]
+//     privateEndpointNetworkPolicies: 'Disabled'
+//     privateLinkServiceNetworkPolicies: 'Enabled'
+//   }
+//   dependsOn: [
+//     virtualNetwork_AzureFirewallSubnet
+//   ]
+// }
 
 resource virtualNetwork_snetKvWeb_existing 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' existing = if (vnetConnected) {
   parent: virtualNetwork
