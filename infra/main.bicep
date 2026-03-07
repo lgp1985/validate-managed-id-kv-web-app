@@ -2,6 +2,7 @@ param location string
 import * as types from './types.bicep'
 param network types.networkParams
 param resources types.resourceParams
+param githubRun_id string = '0'
 
 targetScope = 'subscription'
 
@@ -12,7 +13,7 @@ resource networkResourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' = 
 }
 
 module networkDeployment 'network.bicep' = {
-  name: 'deployNetworkResources'
+  name: 'deployNetworkResources-${githubRun_id}'
   scope: networkResourceGroup
   params: {
     location: location
@@ -27,7 +28,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' = {
 }
 
 module deployment 'deployment.bicep' = {
-  name: 'deployResources'
+  name: 'deployResources-${githubRun_id}'
   scope: resourceGroup
   params: {
     location: location

@@ -31,7 +31,7 @@ resource virtualNetwork_AzureFirewallSubnet 'Microsoft.Network/virtualNetworks/s
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
   }
-  dependsOn:[
+  dependsOn: [
     virtualNetwork_default
   ]
 }
@@ -64,35 +64,6 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-05-01' = {
       enforcement: 'AllowUnencrypted'
     }
     privateEndpointVNetPolicies: 'Disabled'
-    subnets: [
-      // {
-      //   name: 'default'
-      //   id: virtualNetworks_vnet_lg_temp1_name_default.id
-      //   properties: {
-      //     addressPrefixes: [
-      //       '10.0.0.0/24'
-      //     ]
-      //     delegations: []
-      //     privateEndpointNetworkPolicies: 'Disabled'
-      //     privateLinkServiceNetworkPolicies: 'Enabled'
-      //   }
-      //   type: 'Microsoft.Network/virtualNetworks/subnets'
-      // }
-      // {
-      //   name: 'AzureFirewallSubnet'
-      //   id: virtualNetworks_vnet_lg_temp1_name_AzureFirewallSubnet.id
-      //   properties: {
-      //     addressPrefixes: [
-      //       '10.0.1.0/26'
-      //     ]
-      //     delegations: []
-      //     privateEndpointNetworkPolicies: 'Disabled'
-      //     privateLinkServiceNetworkPolicies: 'Enabled'
-      //   }
-      //   type: 'Microsoft.Network/virtualNetworks/subnets'
-      // }
-    ]
-    virtualNetworkPeerings: []
     enableDdosProtection: false
   }
 }
