@@ -32,14 +32,15 @@ jobs:
           type: deployment
           operation: create
           scope: subscription
-          name: main-deploy-yaml-${{ github.run_id }}
+          name: main-${{ github.run_id }}
           location: eastus2
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           template-file: infra/main.bicep
           parameters-file: infra/main.bicepparam
           parameters: >
             {
-              "vnetConnected":  ${{ steps.check-vnet-integration.outputs.exists }}
+              "vnetConnected":  ${{ steps.check-vnet-integration.outputs.exists }},
+              "githubRun_id": "${{ github.run_id }}"
             }
 
       - uses: azure/cli@v2
