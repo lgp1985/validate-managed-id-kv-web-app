@@ -2,6 +2,7 @@ param location string
 import * as types from './types.bicep'
 param network types.networkParams
 param resources types.resourceParams
+param vnetConnected bool
 
 targetScope = 'subscription'
 
@@ -11,22 +12,13 @@ resource networkResourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' = 
   tags: {}
 }
 
-
-module checkVnetConnected 'check-vnet-connected.bicep' = {
-  name: 'checkVnetConnected'
-  scope: resourceGroup
-  params: {
-    userAssignedIdentityName: resources.userAssignedIdentityName
-  }
-}
-
 module networkDeployment 'network.bicep' = {
   name: 'deployNetworkResources'
   scope: networkResourceGroup
   params: {
     location: location
     network: network
-    vnetConnected: checkVnetConnected.outputs.exists
+    vnetConnected: vnetConnected
   }
 }
 
