@@ -99,7 +99,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2025-05-01' = {
   }
 }
 
-resource virtualNetwork_snetKvWeb 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = if (vnetConnected) {
+resource virtualNetwork_snetKvWeb 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' = if (!vnetConnected) {
   // This should be idempotent, but if the subnet is already connected it'll fail with "code": "InUseSubnetCannotBeDeleted", "message": "Subnet snet-kv-web-temp1 is in use by /subscriptions/***/resourceGroups/rg-lg-vnet-temp1/providers/Microsoft.Network/virtualNetworks/vnet-lg-temp1/subnets/snet-kv-web-temp1/serviceAssociationLinks/AppServiceLink and cannot be deleted. In order to delete the subnet, delete all the resources within the subnet. See aka.ms/deletesubnet.",
   parent: virtualNetwork
   name: network.subnetName
@@ -136,3 +136,10 @@ resource virtualNetwork_snetKvWeb 'Microsoft.Network/virtualNetworks/subnets@202
     virtualNetwork_AzureFirewallSubnet
   ]
 }
+
+resource virtualNetwork_snetKvWeb_existing 'Microsoft.Network/virtualNetworks/subnets@2025-05-01' existing = if (vnetConnected) {
+  parent: virtualNetwork
+  name: network.subnetName
+}
+
+output virtualNetwork_snetKvWeb_Id string = vnetConnected ? virtualNetwork_snetKvWeb_existing.id : virtualNetwork_snetKvWeb.id
