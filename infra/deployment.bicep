@@ -108,9 +108,6 @@ resource webApp 'Microsoft.Web/sites@2025-03-01' = {
     virtualNetworkSubnetId: virtualNetwork_snetKvWeb.id
     httpsOnly: true
   }
-  dependsOn: [
-    roleKeyVaultUserAssignedIdentity
-  ]
 }
 
 resource roleKeyVaultUserAssignedIdentity 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
@@ -124,4 +121,16 @@ resource roleKeyVaultUserAssignedIdentity 'Microsoft.Authorization/roleAssignmen
     principalId: UserAssignedIdentity.properties.principalId
     principalType: 'ServicePrincipal'
   }
+}
+
+resource webAppAppSettings 'Microsoft.Web/sites/config@2025-03-01' = {
+  name: 'appsettings'
+  kind: 'string'
+  parent: webApp
+  properties: {
+    secret__temp1: '@Microsoft.KeyVault(SecretUri=${secret.properties.secretUri})'
+  }
+  dependsOn: [
+    roleKeyVaultUserAssignedIdentity
+  ]
 }
